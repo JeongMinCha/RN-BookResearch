@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         width: 53,
         height: 81,
         marginRight: 10,
+        backgroundColor: 'red'
     },
     rightContainer: {
         flex: 1,
