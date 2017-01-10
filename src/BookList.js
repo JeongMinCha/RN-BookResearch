@@ -4,6 +4,8 @@ import {
     View,
     Image,
     Text,
+    ListView,
+    TouchableHighlight,
 } from 'react-native';
 
 var FAKE_BOOK_DATA = [
@@ -19,6 +21,10 @@ var FAKE_BOOK_DATA = [
 ];
 
 const styles = StyleSheet.create({
+    seperator: {
+        height: 1,
+        backgroundColor: '#dddddd'
+    },
     container: {
         flex: 1,
         flexDirection: 'row',
@@ -46,17 +52,49 @@ const styles = StyleSheet.create({
 });
 
 class BookList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2
+            })
+        };
+    }
+
+    componentDidMount() {
+        var books = FAKE_BOOK_DATA;
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(books)
+        });
+    }
+
     render() {
         var book = FAKE_BOOK_DATA[0];
         return (
-            <View style={styles.container}>
-                <Image source={{uri: book.volumeInfo.imageLinks.thumbnail}}
-                       style={styles.thumbnail} />
-                <View style={styles.rightContainer}>
-                    <Text style={styles.title}>{book.volumeInfo.title}</Text>
-                    <Text style={styles.author}>{book.volumeInfo.authors}</Text>
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderBook.bind(this)}
+                style={styles.listView}
+                />
+        );
+    }
+
+    renderBook(book) {
+        return (
+            <TouchableHighlight>
+                <View>
+                    <View style={styles.container}>
+                        <Image
+                            source={{uri: book.volumeInfo.imageLinks.thumbnail}}
+                            style={styles.thumbnail}/>
+                        <View style={styles.rightContainer}>
+                            <Text style={styles.title}>{book.volumeInfo.title}</Text>
+                            <Text style={styles.author}>{book.volumeInfo.authors}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.seperator} />
                 </View>
-            </View>
+            </TouchableHighlight>
         );
     }
 }
