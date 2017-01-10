@@ -17,7 +17,7 @@ const styles = Stylesheet.create({
     }
 });
 
-export default class Featured extends Component {
+class Featured extends Component {
     render() {
         return (
             <View style={styles.container}>
