@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import Featured from './src/featured';
+import Search from './src/search';
 import {
   AppRegistry,
   StyleSheet,
