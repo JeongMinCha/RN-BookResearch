@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    View
+    View,
+    Image,
+    Text,
 } from 'react-native';
 
 var FAKE_BOOK_DATA = [
