@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import Featured from './src/featured';
 import {
   AppRegistry,
   StyleSheet,
