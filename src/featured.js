@@ -5,7 +5,7 @@ import {
     Text
 } from 'react-native';
 
-const styles = Stylesheet.create({
+const styles = StyleSheet.create({
     description: {
         fontSize: 20,
         backgroundColor: 'white',
