@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import Featured from './src/Featured';
-import Search from './src/search';
+import Search from './src/Search';
 import {
     AppRegistry,
     TabBarIOS,
