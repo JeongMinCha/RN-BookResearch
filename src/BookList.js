@@ -6,21 +6,20 @@ import {
     Text,
     ListView,
     TouchableHighlight,
+    ActivityIndicator,
 } from 'react-native';
 
-var FAKE_BOOK_DATA = [
-    {
-        volumeInfo: {
-            title: 'The Catcher in the Rye',
-            authors: "J. D. Salinger",
-            imageLinks: {
-                thumbnail: 'http://books.google.com/books/content?id=PCDengEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'
-            }
-        }
-    }
-];
+var REQUEST_URL = 'https://www.googleapis.com/books/v1/volumes?q=subject:fiction';
 
 const styles = StyleSheet.create({
+    listView: {
+        backgroundColor: '#F5FCFF'
+    },
+    loading: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     seperator: {
         height: 1,
         backgroundColor: '#dddddd'
@@ -55,6 +54,7 @@ class BookList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2
             })
@@ -62,20 +62,32 @@ class BookList extends Component {
     }
 
     componentDidMount() {
-        var books = FAKE_BOOK_DATA;
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(books)
-        });
+        this.fetchData();
+    }
+
+    fetchData() {
+        fetch(REQUEST_URL)
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(responseData.items),
+                    isLoading: false,
+                });
+            })
+            .done();
     }
 
     render() {
-        var book = FAKE_BOOK_DATA[0];
+        if (this.state.isLoading) {
+            return this.renderLoadingView();
+        }
+
         return (
             <ListView
                 dataSource={this.state.dataSource}
                 renderRow={this.renderBook.bind(this)}
                 style={styles.listView}
-                />
+            />
         );
     }
 
@@ -95,6 +107,18 @@ class BookList extends Component {
                     <View style={styles.seperator} />
                 </View>
             </TouchableHighlight>
+        );
+    }
+
+    renderLoadingView() {
+        return (
+            <View style={styles.loading}>
+                <ActivityIndicator
+                    size='large'/>
+                <Text>
+                    Loading books...
+                </Text>
+            </View>
         );
     }
 }
