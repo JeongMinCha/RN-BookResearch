@@ -7,7 +7,7 @@ import {
     TouchableHighlight,
     ActivityIndicator,
 } from 'react-native';
-import SearchResults from './SearchResult';
+import SearchResults from './SearchResults';
 
 const styles = StyleSheet.create({
     container: {
@@ -94,7 +94,7 @@ class SearchBooks extends Component {
 
     bookTitleInput(event) {
         this.setState({
-            booktTitle: event.nativeEvent.text,
+            bookTitle: event.nativeEvent.text,
         });
     }
 
@@ -132,7 +132,7 @@ class SearchBooks extends Component {
                     this.props.navigator.push({
                         title: 'Search Results',
                         component: SearchResults,
-                        passProps: {books: responseDara.items}
+                        passProps: {books: responseData.items}
                     });
                 } else {
                     this.setState({ errorMessage: 'No results found.'});

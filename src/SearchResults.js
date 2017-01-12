@@ -7,6 +7,7 @@ import {
     Image,
     ListView,
 } from 'react-native';
+import BookDetail from './BookDetail';
 
 const styles = StyleSheet.create({
     container: {
